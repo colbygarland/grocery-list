@@ -13,7 +13,8 @@ export type GroceryItem = {
 export type TodoItem = {
   id: string
   name: string
-  state: boolean
+  createdAt: Date
+  completedAt: Date | null
 }
 
 export const API = {
@@ -51,15 +52,17 @@ export const API = {
     }
   },
   createTodoItem: async (item: TodoItem) => {
-    set(ref(firebaseDb, `/${TODO_KEY}/${item.id}`), {
+    const id = Date.now()
+    set(ref(firebaseDb, `/${TODO_KEY}/${id}`), {
       name: item.name,
-      id: item.id,
-      state: false,
+      id: id,
+      createdAt: Date.now(),
+      completedAt: null,
     })
   },
-  setTodoItemState: async (id: string, state: boolean) => {
+  setTodoItemState: async (id: string, completed: boolean) => {
     update(ref(firebaseDb, `/${TODO_KEY}/${id}`), {
-      state,
+      completedAt: completed ? new Date() : null,
     })
   },
 }

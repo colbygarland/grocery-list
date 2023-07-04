@@ -12,12 +12,30 @@ export default function Todo() {
 
   useEffect(() => {
     API.getTodo().then(values => {
-      setItems(Object.values(values!))
+      if (values) {
+        setItems(Object.values(values))
+      }
     })
   }, [])
 
-  const incompleteItems = items.filter(item => !item.state)
-  const completeItems = items.filter(item => item.state)
+  const incompleteItems = items
+    .filter(item => !item.completedAt)
+    .sort(function (a, b) {
+      var keyA = new Date(a.createdAt!),
+        keyB = new Date(b.createdAt!)
+      if (keyA < keyB) return 1
+      if (keyA > keyB) return -1
+      return 0
+    })
+  const completeItems = items
+    .filter(item => item.completedAt)
+    .sort(function (a, b) {
+      var keyA = new Date(a.completedAt!),
+        keyB = new Date(b.completedAt!)
+      if (keyA < keyB) return 1
+      if (keyA > keyB) return -1
+      return 0
+    })
 
   return (
     <PageContainer>

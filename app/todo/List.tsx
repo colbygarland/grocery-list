@@ -5,7 +5,7 @@ import { API, TodoItem } from '@/utils/api'
 import { useState } from 'react'
 
 const Item = ({ item }: { item: TodoItem }) => {
-  const [checked, setChecked] = useState(item.state)
+  const [checked, setChecked] = useState(Boolean(item.completedAt))
 
   return (
     <li>

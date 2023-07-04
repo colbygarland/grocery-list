@@ -13,7 +13,9 @@ export default function Home() {
 
   useEffect(() => {
     API.get().then((values: GroceryItem[] | null) => {
-      setList(Object.values(values!))
+      if (values) {
+        setList(Object.values(values))
+      }
     })
   }, [])
 
