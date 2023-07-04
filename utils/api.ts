@@ -1,3 +1,8 @@
+import { child, get, ref, set, update } from 'firebase/database'
+import { firebaseDb } from './firebase'
+
+const ITEMS_KEY = 'items'
+
 export type GroceryItem = {
   id: string
   name: string
@@ -6,30 +11,25 @@ export type GroceryItem = {
 }
 
 export const API = {
-  get: async (): Promise<GroceryItem[]> => {
-    // todo: replace with actual API
-    return [
-      {
-        id: 'milk',
-        name: 'Milk',
-        state: true,
-        section: 'costco',
-      },
-      {
-        id: 'eggs',
-        name: 'Eggs',
-        state: false,
-        section: 'costco',
-      },
-      {
-        id: 'fancy_cream',
-        name: 'Fancy Cream',
-        state: true,
-        section: 'non_costco',
-      },
-    ]
+  get: async (): Promise<GroceryItem[] | null> => {
+    const snapshot = await get(child(ref(firebaseDb), `/${ITEMS_KEY}/`))
+    if (snapshot.exists()) {
+      return snapshot.val()
+    } else {
+      return null
+    }
   },
   setItemState: async (id: string, state: boolean) => {
-    // todo
+    update(ref(firebaseDb, `/${ITEMS_KEY}/${id}`), {
+      state,
+    })
+  },
+  createItem: async (item: GroceryItem) => {
+    set(ref(firebaseDb, `/${ITEMS_KEY}/${item.id}`), {
+      name: item.name,
+      id: item.id,
+      state: false,
+      section: item.section,
+    })
   },
 }
