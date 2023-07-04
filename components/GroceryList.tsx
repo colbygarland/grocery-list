@@ -1,14 +1,39 @@
-import { GroceryItem } from '@/utils/api'
+'use client'
+
+import { API, GroceryItem } from '@/utils/api'
 import { Toggle } from './Toggle'
 import { useLongPress } from 'use-long-press'
+import { useState } from 'react'
+import { Button } from './Button'
 
 const ListItem = ({ id, children }: { id: string; children: any }) => {
+  const [deleteItem, setDeleteItem] = useState(false)
+  const [deleteText, setDeleteText] = useState('Delete item?')
+
   const bind = useLongPress(() => {
-    console.log('long press', id)
+    setDeleteItem(true)
   })
+
   return (
     <li className="mb-3" {...bind()}>
-      {children}
+      {deleteItem ? (
+        <Button
+          onClick={() => {
+            API.deleteItem(id)
+            setDeleteText('Deleting..')
+            setTimeout(() => {
+              setDeleteText('Deleted!')
+            }, 1000)
+            setTimeout(() => {
+              window.location.reload()
+            }, 2000)
+          }}
+        >
+          {deleteText}
+        </Button>
+      ) : (
+        children
+      )}
     </li>
   )
 }
