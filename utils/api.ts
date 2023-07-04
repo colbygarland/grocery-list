@@ -30,6 +30,10 @@ export const API = {
       state,
     })
   },
+  clearAllItems: async () => {
+    const items = await API.get()
+    Object.keys(items!).map(item => API.setItemState(item, false))
+  },
   createItem: async (item: GroceryItem) => {
     set(ref(firebaseDb, `/${ITEMS_KEY}/${item.id}`), {
       name: item.name,
