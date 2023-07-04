@@ -11,7 +11,7 @@ export const GroceryList = ({ items }: { items?: GroceryItem[] }) => {
   }
 
   return (
-    <ul>
+    <ul className="grid grid-cols-2">
       {items.map(item => {
         return (
           <ListItem key={item.id}>

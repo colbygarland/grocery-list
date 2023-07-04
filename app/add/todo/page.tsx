@@ -21,7 +21,6 @@ export default function Add() {
       await API.createTodoItem({
         id,
         name: todo,
-        state: false,
       })
       setSubmitting(false)
       setShowToast(true)

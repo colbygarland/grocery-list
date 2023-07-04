@@ -13,8 +13,8 @@ export type GroceryItem = {
 export type TodoItem = {
   id: string
   name: string
-  createdAt: Date
-  completedAt: Date | null
+  createdAt?: Date
+  completedAt?: Date | null
 }
 
 export const API = {
