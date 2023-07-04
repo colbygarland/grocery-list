@@ -17,9 +17,15 @@ export default function Add() {
     e.preventDefault()
     setSubmitting(true)
     setTimeout(async () => {
-      //await API.createItem(item)
+      const id = todo.trim().replaceAll(' ', '_')
+      await API.createTodoItem({
+        id,
+        name: todo,
+        state: false,
+      })
       setSubmitting(false)
       setShowToast(true)
+      setTodo('')
 
       setTimeout(() => {
         setShowToast(false)

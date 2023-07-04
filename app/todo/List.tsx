@@ -1,36 +1,34 @@
 'use client'
 
 import { Checkbox } from '@/components/Checkbox'
+import { API, TodoItem } from '@/utils/api'
+import { useState } from 'react'
 
-export const List = ({
-  items,
-  strikethrough,
-  checked,
-}: {
-  items: any[]
-  strikethrough?: boolean
-  checked?: boolean
-}) => {
+const Item = ({ item }: { item: TodoItem }) => {
+  const [checked, setChecked] = useState(item.state)
+
+  return (
+    <li>
+      <Checkbox
+        label={item.name}
+        id={item.id}
+        strikethrough={checked}
+        checked={checked}
+        onChange={() => {
+          API.setTodoItemState(item.id, !checked)
+          setChecked(!checked)
+        }}
+      />
+    </li>
+  )
+}
+
+export const List = ({ items }: { items: TodoItem[] }) => {
   return (
     <ul>
-      <li>
-        <Checkbox
-          label="Get new vehicle and house insurance"
-          id="get_new_vehicle_and_house_insurance"
-          strikethrough={strikethrough}
-          checked={checked}
-          onChange={() => {}}
-        />
-      </li>
-      <li>
-        <Checkbox
-          label="Finish planning New Zealand"
-          id="finish_planning_new_zealand"
-          strikethrough={strikethrough}
-          checked={checked}
-          onChange={() => {}}
-        />
-      </li>
+      {items.map(item => {
+        return <Item key={item.id} item={item} />
+      })}
     </ul>
   )
 }
