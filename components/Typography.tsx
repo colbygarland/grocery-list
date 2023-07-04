@@ -5,5 +5,5 @@ export const H1 = ({ children }: { children: any }) => (
 )
 
 export const H2 = ({ children }: { children: any }) => (
-  <h2 className="text-xl font-bold mb-4">{children}</h2>
+  <h2 className="text-xl font-bold mb-4 dark:text-white">{children}</h2>
 )
