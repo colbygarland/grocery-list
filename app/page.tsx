@@ -1,12 +1,20 @@
-import { Button } from '@/components/Button'
+'use client'
+
 import { ClearButton } from '@/components/ClearButton'
 import { GroceryList } from '@/components/GroceryList'
 import { PageContainer } from '@/components/PageContainer'
 import { H1, H2 } from '@/components/Typography'
-import { API } from '@/utils/api'
+import { API, GroceryItem } from '@/utils/api'
+import { useEffect, useState } from 'react'
 
-export default async function Home() {
-  const list = await API.get()
+export default function Home() {
+  const [list, setList] = useState<GroceryItem[]>([])
+
+  useEffect(() => {
+    API.get().then((values: GroceryItem[] | null) => {
+      setList(values!)
+    })
+  }, [])
 
   const costcoItems = Object.values(list!).filter(
     ({ section }) => section === 'costco',
