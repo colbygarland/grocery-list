@@ -23,3 +23,5 @@ export default async function Home() {
     </PageContainer>
   )
 }
+
+export const revalidate = 60
