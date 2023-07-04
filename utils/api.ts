@@ -1,4 +1,4 @@
-import { child, get, ref, set, update } from 'firebase/database'
+import { child, get, ref, remove, set, update } from 'firebase/database'
 import { firebaseDb } from './firebase'
 
 const ITEMS_KEY = 'items'
@@ -42,6 +42,9 @@ export const API = {
       state: false,
       section: item.section,
     })
+  },
+  deleteItem: (id: string) => {
+    remove(ref(firebaseDb, `/${ITEMS_KEY}/${id}`))
   },
   getTodo: async (): Promise<TodoItem[] | null> => {
     const snapshot = await get(child(ref(firebaseDb), `/${TODO_KEY}/`))
