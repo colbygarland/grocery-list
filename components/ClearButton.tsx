@@ -28,7 +28,7 @@ export const ClearButton = () => {
             }, 3000)
             setTimeout(() => {
               window.location.reload()
-            }, 1000)
+            }, 3000)
             return
         }
       }}
