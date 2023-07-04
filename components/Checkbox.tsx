@@ -3,11 +3,13 @@ export const Checkbox = ({
   id,
   onChange,
   checked,
+  strikethrough,
 }: {
   label: string
   id: string
   onChange: any
   checked?: boolean
+  strikethrough?: boolean
 }) => {
   return (
     <div className="flex items-center mb-4">
@@ -21,7 +23,9 @@ export const Checkbox = ({
       />
       <label
         htmlFor={id}
-        className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+        className={`ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 ${
+          strikethrough && 'line-through text-gray-400'
+        }`}
       >
         {label}
       </label>
